@@ -13,13 +13,12 @@
 
   <style>
     :root {
-      --bg-color: #E3F1FB;
-      --card-blue-1: #A8D0EF;
-      --card-blue-2: #C1E4F3;
-      --cream-accent: #FFF9E6;
-      --deep-accent: #8eb7de;
-      --text-dark: #2c4257;
-      --text-sub: #54718a;
+      --bg-color: #d6d9dc;
+      --border-soft: #bfc5cb;
+      --btn-bg: #3b4046;
+      --btn-hover: #25292e;
+      --text-dark: #1f2328;
+      --text-sub: #57606a;
       --white: #ffffff;
     }
 
@@ -31,7 +30,7 @@
     }
 
     body {
-      background-color: var(--bg-color);
+      background: linear-gradient(180deg, #b8bdc2 0%, #d6d9dc 50%, #eceff1 100%);
       color: var(--text-dark);
       min-height: 100vh;
       padding: 24px 16px 80px;
@@ -46,8 +45,8 @@
       background: var(--white);
       border-radius: 26px;
       padding: 24px 20px;
-      box-shadow: 0 8px 26px rgba(142, 183, 222, 0.3);
-      border: 1.5px solid var(--card-blue-2);
+      box-shadow: 0 8px 26px rgba(31, 35, 40, 0.14);
+      border: 1.5px solid var(--border-soft);
       margin-bottom: 16px;
     }
 
@@ -69,7 +68,7 @@
     .input-box, .textarea-box {
       width: 100%;
       padding: 12px 14px;
-      border: 1.5px solid var(--card-blue-2);
+      border: 1.5px solid var(--border-soft);
       border-radius: 16px;
       font-size: 13.5px;
       background: var(--white);
@@ -79,12 +78,12 @@
     }
 
     .input-box:focus, .textarea-box:focus {
-      border-color: var(--deep-accent);
+      border-color: var(--btn-bg);
     }
 
     .btn-main {
       width: 100%;
-      background: var(--deep-accent);
+      background: var(--btn-bg);
       color: #fff;
       border: none;
       padding: 13px;
@@ -92,12 +91,16 @@
       font-size: 14.5px;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(142, 183, 222, 0.45);
+      box-shadow: 0 4px 14px rgba(31, 35, 40, 0.25);
+    }
+
+    .btn-main:hover {
+      background: var(--btn-hover);
     }
 
     .btn-logout {
       background: var(--white);
-      border: 1.5px solid var(--card-blue-1);
+      border: 1.5px solid var(--border-soft);
       color: var(--text-dark);
       padding: 6px 14px;
       border-radius: 14px;
@@ -122,7 +125,7 @@
           <input type="email" id="email" class="input-box" placeholder="phuwindeknaewza@gmail.com" required autocomplete="off">
           <input type="password" id="password" class="input-box" placeholder="password" required autocomplete="off">
           <button type="submit" class="btn-main">เข้าสู่ระบบ ♡</button>
-          <p id="authError" style="color:#e05260; font-size:12px; margin-top:10px; display:none;">ข้อมูลเข้าสู่ระบบไม่ถูกต้อง</p>
+          <p id="authError" style="color:#b91c1c; font-size:12px; margin-top:10px; display:none;">ข้อมูลเข้าสู่ระบบไม่ถูกต้อง</p>
         </form>
       </div>
     </div>
@@ -217,7 +220,7 @@
 
     let siteData = {
       banner: "https://file.garden/asG8Gt-rqWIpi3II/IMG_4980.jpeg",
-      profile: "https://file.garden/asG8Gt-rqWIpi3II/IMG_4981.jpeg",
+      profile: "https://file.garden/asG8Gt-rqWIpi3II/IMG_4992.jpeg",
       pageTitle: "Phuwin Payment ♡",
       accOwner: "name : sasiwimon",
       kplusNum: "175-357-8087",
@@ -225,7 +228,7 @@
       formArt: DEFAULT_FORM_TEXT,
       copyNote: "ซื้อขายกับภูวินท์line@383dsyqf",
       postImg: "https://file.garden/asG8Gt-rqWIpi3II/IMG_4982.jpeg",
-      musicUrl: "https://file.garden/asG8Gt-rqWIpi3II/Wistoria%20Wand%20and%20Sword%20Season%202%20Full%20Opening%20Lyrics%20Believers%20ASH%20DA%20HERO.mp3"
+      musicUrl: "https://file.garden/asG8Gt-rqWIpi3II/BABYMONSTER%20-%20'DESERVE'%20M%20V.mp3"
     };
 
     window.onload = function() {
