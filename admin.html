@@ -17,7 +17,7 @@
       --card-blue-1: #A8D0EF;
       --card-blue-2: #C1E4F3;
       --cream-accent: #FFF9E6;
-      --deep-accent: #7faed6;
+      --deep-accent: #8eb7de;
       --text-dark: #2c4257;
       --text-sub: #54718a;
       --white: #ffffff;
@@ -31,7 +31,7 @@
     }
 
     body {
-      background: linear-gradient(180deg, #dce6ed 0%, #E3F1FB 50%, #eef4f8 100%);
+      background-color: var(--bg-color);
       color: var(--text-dark);
       min-height: 100vh;
       padding: 24px 16px 80px;
@@ -46,7 +46,7 @@
       background: var(--white);
       border-radius: 26px;
       padding: 24px 20px;
-      box-shadow: 0 8px 26px rgba(127, 174, 214, 0.3);
+      box-shadow: 0 8px 26px rgba(142, 183, 222, 0.3);
       border: 1.5px solid var(--card-blue-2);
       margin-bottom: 16px;
     }
@@ -92,7 +92,7 @@
       font-size: 14.5px;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(127, 174, 214, 0.45);
+      box-shadow: 0 4px 14px rgba(142, 183, 222, 0.45);
     }
 
     .btn-logout {
@@ -119,7 +119,7 @@
       <div class="card-panel" style="text-align: center;">
         <h2 style="margin-bottom: 18px; font-size: 20px;">Admin Login ♡</h2>
         <form onsubmit="handleAuth(event)">
-          <input type="email" id="email" class="input-box" placeholder="email" required autocomplete="off">
+          <input type="email" id="email" class="input-box" placeholder="phuwindeknaewza@gmail.com" required autocomplete="off">
           <input type="password" id="password" class="input-box" placeholder="password" required autocomplete="off">
           <button type="submit" class="btn-main">เข้าสู่ระบบ ♡</button>
           <p id="authError" style="color:#e05260; font-size:12px; margin-top:10px; display:none;">ข้อมูลเข้าสู่ระบบไม่ถูกต้อง</p>
@@ -160,7 +160,7 @@
         <input type="text" id="walletInp" class="input-box">
 
         <label class="field-label">ข้อความฟอร์มใหญ่:</label>
-        <textarea id="formArtInp" class="textarea-box" rows="9"></textarea>
+        <textarea id="formArtInp" class="textarea-box" rows="10"></textarea>
 
         <label class="field-label">ข้อความโน้ตสลิปที่ให้คัดลอก:</label>
         <input type="text" id="copyNoteInp" class="input-box">
@@ -187,8 +187,8 @@
     const DB_COLLECTION = "phuwin_payment_data";
     const DB_DOC = "main_content";
 
-    const TARGET_ID = "bWluYXN1a2lrdWJAZ21haWwuY29t";
-    const TARGET_KEY = "amd5dWtheDA0Njk=";
+    const ADMIN_EMAIL = "phuwindeknaewza@gmail.com";
+    const ADMIN_PASS = "phuwin11";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCpAGDSy1NRgmLV_g7qJrCpwOhU9MrfQyY",
@@ -202,6 +202,19 @@
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
+    const DEFAULT_FORM_TEXT = [
+      "💬𓈒♡⠀",
+      "ฝากคุณลูกค้ากำกับ𓈒 สลิป",
+      "ซื้อขายกับภูวินท์line@383dsyqf ♡3♡𓈒🐈‍⬛",
+      "ธนาคาร 𓈒 คัดลอกไปใส่ตรง",
+      "𓈒💭╺ บันทึกช่วยจำ !",
+      "วอเล็ท 𓈒 คัดลอกไปใส่ตรง",
+      "╺ ข้อความบอกผู้รับ 𓈒🗯️",
+      "╺ กรณี “ลืม” โน๊ต",
+      "ให้โอนมา1฿ แล้วโน๊ตสลิปมา",
+      "♡𓈒📓𓈒⚫️"
+    ].join("\n");
+
     let siteData = {
       banner: "https://file.garden/asG8Gt-rqWIpi3II/IMG_4980.jpeg",
       profile: "https://file.garden/asG8Gt-rqWIpi3II/IMG_4981.jpeg",
@@ -209,7 +222,7 @@
       accOwner: "name : sasiwimon",
       kplusNum: "175-357-8087",
       walletNum: "092-805-9572",
-      formArt: "💬𓈒♡⠀\n\n        ฝากคุณลูกค้ากำกับ𓈒  สลิป\n  ซื้อขายกับภูวินท์line@383dsyqf  ♡3♡𓈒🐈‍⬛\n\n       ธนาคาร 𓈒 คัดลอกไปใส่ตรง\n         𓈒💭╺     บันทึกช่วยจำ   !  \n\n       วอเล็ท 𓈒 คัดลอกไปใส่ตรง\n      ╺     ข้อความบอกผู้รับ   𓈒🗯️\n\n              ╺ กรณี “ลืม” โน๊ต \n     ให้โอนมา1฿ แล้วโน๊ตสลิปมา\n\n                                         ♡𓈒📓𓈒⚫️",
+      formArt: DEFAULT_FORM_TEXT,
       copyNote: "ซื้อขายกับภูวินท์line@383dsyqf",
       postImg: "https://file.garden/asG8Gt-rqWIpi3II/IMG_4982.jpeg",
       musicUrl: "https://file.garden/asG8Gt-rqWIpi3II/Wistoria%20Wand%20and%20Sword%20Season%202%20Full%20Opening%20Lyrics%20Believers%20ASH%20DA%20HERO.mp3"
@@ -223,10 +236,10 @@
 
     function handleAuth(e) {
       e.preventDefault();
-      const mail = document.getElementById('email').value.trim();
+      const mail = document.getElementById('email').value.trim().toLowerCase();
       const pass = document.getElementById('password').value.trim();
 
-      if (btoa(mail) === TARGET_ID && btoa(pass) === TARGET_KEY) {
+      if (mail === ADMIN_EMAIL.toLowerCase() && pass === ADMIN_PASS) {
         sessionStorage.setItem('phuwin_auth', 'true');
         showDashboard();
       } else {
@@ -254,7 +267,7 @@
       document.getElementById('accOwnerInp').value = siteData.accOwner || '';
       document.getElementById('kplusInp').value = siteData.kplusNum || '';
       document.getElementById('walletInp').value = siteData.walletNum || '';
-      document.getElementById('formArtInp').value = siteData.formArt || '';
+      document.getElementById('formArtInp').value = siteData.formArt || DEFAULT_FORM_TEXT;
       document.getElementById('copyNoteInp').value = siteData.copyNote || '';
       document.getElementById('postImgInp').value = siteData.postImg || '';
       document.getElementById('musicInp').value = siteData.musicUrl || '';
