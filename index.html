@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <title>Phuwin Payment ♡</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <style>
+    :root {
+      --bg-color: #E3F1FB;
+      --card-blue-1: #A8D0EF;
+      --card-blue-2: #C1E4F3;
+      --cream-accent: #FFF9E6;
+      --deep-accent: #7faed6;
+      --text-dark: #2c4257;
+      --text-sub: #54718a;
+      --white: #ffffff;
+      --shadow: 0 8px 24px rgba(127, 174, 214, 0.25);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', 'Mitr', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(180deg, #dce6ed 0%, #E3F1FB 45%, #eef4f8 100%);
+      color: var(--text-dark);
+      display: flex;
+      justify-content: center;
+      padding: 20px 14px 60px;
+      position: relative;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 410px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* 1. ส่วนหัว: แบนเนอร์ + โปรไฟล์ + ชื่อร้าน */
+    .header-box {
+      background: var(--white);
+      border-radius: 28px;
+      padding: 12px 12px 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border: 1.5px solid var(--card-blue-2);
+    }
+
+    .banner-wrap {
+      width: 100%;
+      height: 145px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--card-blue-2);
+    }
+
+    .banner-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .profile-wrap {
+      position: relative;
+      margin-top: -48px;
+      display: inline-block;
+    }
+
+    .profile-img {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--white);
+      box-shadow: 0 6px 18px rgba(127, 174, 214, 0.35);
+      background: var(--white);
+      display: block;
+    }
+
+    .main-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-top: 10px;
+      letter-spacing: 0.4px;
+    }
+
+    /* 2. กล่องชื่อบัญชี */
+    .owner-card {
+      background: var(--white);
+      border: 1.5px solid var(--card-blue-2);
+      border-radius: 20px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .owner-name {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    /* 3. กล่องเลขบัญชี / วอลเลตแบบกดคัดลอก */
+    .bank-card {
+      background: var(--white);
+      border: 1.5px solid var(--card-blue-2);
+      border-radius: 20px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+      gap: 8px;
+    }
+
+    .bank-info {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .bank-title {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-sub);
+    }
+
+    .bank-number {
+      font-size: 16.5px;
+      font-weight: 700;
+      color: var(--text-dark) !important;
+      letter-spacing: 0.5px;
+      text-decoration: none !important;
+    }
+
+    .btn-action {
+      background: var(--deep-accent);
+      color: var(--white);
+      border: none;
+      padding: 7px 16px;
+      border-radius: 14px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(127, 174, 214, 0.4);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .btn-action:active {
+      transform: scale(0.94);
+    }
+
+    /* 4. กล่องฟอร์มใหญ่ */
+    .form-art-card {
+      background: var(--cream-accent);
+      border: 1.5px solid #f2e7c4;
+      border-radius: 22px;
+      padding: 18px 16px;
+      line-height: 1.75;
+      font-size: 13px;
+      color: var(--text-dark);
+      white-space: pre-wrap;
+      word-break: break-word;
+      box-shadow: 0 4px 14px rgba(220, 205, 160, 0.25);
+    }
+
+    /* 5. กล่องคัดลอกโน้ตสลิป */
+    .copy-note-card {
+      background: var(--white);
+      border: 1.5px solid var(--card-blue-1);
+      border-radius: 20px;
+      padding: 13px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+      gap: 10px;
+    }
+
+    .copy-note-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-sub);
+      margin-bottom: 2px;
+    }
+
+    .copy-note-value {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-dark);
+      word-break: break-all;
+    }
+
+    /* 6. รูปป้ายต้นฉบับความชัด 100% ไม่ลดขนาด */
+    .sign-img-card {
+      background: var(--white);
+      border: 1.5px solid var(--card-blue-2);
+      border-radius: 22px;
+      padding: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .sign-img-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 16px;
+      image-rendering: high-quality;
+    }
+
+    /* Toast */
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(90px);
+      background: rgba(44, 66, 87, 0.92);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      padding: 9px 20px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      pointer-events: none;
+      transition: transform 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      z-index: 99999;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    }
+
+    .toast-msg.show {
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- เพลงพื้นหลัง -->
+  <audio id="bgMusic" loop preload="auto" playsinline src="https://file.garden/asG8Gt-rqWIpi3II/Wistoria%20Wand%20and%20Sword%20Season%202%20Full%20Opening%20Lyrics%20Believers%20ASH%20DA%20HERO.mp3"></audio>
+
+  <div class="wrapper">
+
+    <!-- 1. แบนเนอร์ + โปรไฟล์ + ชื่อร้าน -->
+    <div class="header-box">
+      <div class="banner-wrap">
+        <img id="bannerImg" class="banner-img" src="https://file.garden/asG8Gt-rqWIpi3II/IMG_4980.jpeg" alt="Banner">
+      </div>
+      <div class="profile-wrap">
+        <img id="profileImg" class="profile-img" src="https://file.garden/asG8Gt-rqWIpi3II/IMG_4981.jpeg" alt="Profile">
+      </div>
+      <h1 class="main-title" id="pageTitleText">Phuwin Payment ♡</h1>
+    </div>
+
+    <!-- 2. ชื่อบัญชี -->
+    <div class="owner-card">
+      <div class="owner-name" id="accOwnerText">name : sasiwimon</div>
+    </div>
+
+    <!-- 3. k-plus -->
+    <div class="bank-card">
+      <div class="bank-info">
+        <div class="bank-title">k-plus</div>
+        <div class="bank-number" id="kplusNumText">175-357-8087</div>
+      </div>
+      <button type="button" class="btn-action" onclick="copyPlainNumber('kplusNumText')">คัดลอก</button>
+    </div>
+
+    <!-- 4. wallet -->
+    <div class="bank-card">
+      <div class="bank-info">
+        <div class="bank-title">wallet</div>
+        <div class="bank-number" id="walletNumText">092-805-9572</div>
+      </div>
+      <button type="button" class="btn-action" onclick="copyPlainNumber('walletNumText')">คัดลอก</button>
+    </div>
+
+    <!-- 5. ช่องฟอร์มใหญ่ -->
+    <div class="form-art-card" id="formArtBox">💬𓈒♡⠀
+
+        ฝากคุณลูกค้ากำกับ𓈒  สลิป
+  ซื้อขายกับภูวินท์line@383dsyqf  ♡3♡𓈒🐈‍⬛
+
+       ธนาคาร 𓈒 คัดลอกไปใส่ตรง
+         𓈒💭╺     บันทึกช่วยจำ   !  
+
+       วอเล็ท 𓈒 คัดลอกไปใส่ตรง
+      ╺     ข้อความบอกผู้รับ   𓈒🗯️
+
+              ╺ กรณี “ลืม” โน๊ต 
+     ให้โอนมา1฿ แล้วโน๊ตสลิปมา
+
+                                         ♡𓈒📓𓈒⚫️</div>
+
+    <!-- 6. ช่องโน้ตสลิปให้กดคัดลอก (คัดลอกเฉพาะ ซื้อขายกับภูวินท์line@383dsyqf) -->
+    <div class="copy-note-card">
+      <div class="bank-info">
+        <div class="copy-note-label">โน้ตสลิป :</div>
+        <div class="copy-note-value" id="copyNoteTarget">ซื้อขายกับภูวินท์line@383dsyqf</div>
+      </div>
+      <button type="button" class="btn-action" onclick="copyNoteOnly()">คัดลอก</button>
+    </div>
+
+    <!-- 7. รูปป้ายต้นฉบับความชัด 100% ไม่ลดขนาด -->
+    <div class="sign-img-card">
+      <img id="postImage" src="https://file.garden/asG8Gt-rqWIpi3II/IMG_4982.jpeg" alt="Sign">
+    </div>
+
+  </div>
+
+  <div class="toast-msg" id="toastMsg">คัดลอกแล้วค่ะ ♡</div>
+
+  <script>
+    const DB_COLLECTION = "phuwin_payment_data";
+    const DB_DOC = "main_content";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCpAGDSy1NRgmLV_g7qJrCpwOhU9MrfQyY",
+      authDomain: "benefitie.firebaseapp.com",
+      projectId: "benefitie",
+      storageBucket: "benefitie.firebasestorage.app",
+      messagingSenderId: "270365672215",
+      appId: "1:270365672215:web:230d1491091e26ce83ed52"
+    };
+
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const music = document.getElementById('bgMusic');
+    let audioContext;
+
+    function playMusic() {
+      if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioContext.state === 'suspended') audioContext.resume();
+      if (music.paused) music.play().catch(() => {});
+    }
+
+    window.addEventListener('load', playMusic);
+    document.addEventListener('DOMContentLoaded', playMusic);
+    ['touchstart', 'touchend', 'click', 'scroll', 'pointerdown', 'mousemove'].forEach(evt => {
+      document.addEventListener(evt, function trig() {
+        playMusic();
+        document.removeEventListener(evt, trig);
+      }, { passive: true });
+    });
+
+    function applyData(d) {
+      if (!d) return;
+      if (d.banner) document.getElementById('bannerImg').src = d.banner;
+      if (d.profile) document.getElementById('profileImg').src = d.profile;
+      if (d.pageTitle) {
+        document.getElementById('pageTitleText').textContent = d.pageTitle;
+        document.title = d.pageTitle;
+      }
+      if (d.accOwner) document.getElementById('accOwnerText').textContent = d.accOwner;
+      if (d.kplusNum) document.getElementById('kplusNumText').textContent = d.kplusNum;
+      if (d.walletNum) document.getElementById('walletNumText').textContent = d.walletNum;
+      if (d.formArt) document.getElementById('formArtBox').textContent = d.formArt;
+      if (d.copyNote) document.getElementById('copyNoteTarget').textContent = d.copyNote;
+      if (d.postImg) document.getElementById('postImage').src = d.postImg;
+      if (d.musicUrl && music.src !== d.musicUrl) {
+        music.src = d.musicUrl;
+        playMusic();
+      }
+    }
+
+    try {
+      const cached = localStorage.getItem('phuwin_payment_cache');
+      if (cached) applyData(JSON.parse(cached));
+    } catch(e) {}
+
+    db.collection(DB_COLLECTION).doc(DB_DOC).onSnapshot(doc => {
+      if (doc.exists) {
+        const d = doc.data();
+        localStorage.setItem('phuwin_payment_cache', JSON.stringify(d));
+        applyData(d);
+      }
+    });
+
+    function showToast(txt) {
+      const t = document.getElementById('toastMsg');
+      t.textContent = txt;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2000);
+    }
+
+    // คัดลอกเฉพาะข้อความโน้ต: ซื้อขายกับภูวินท์line@383dsyqf
+    function copyNoteOnly() {
+      const val = document.getElementById('copyNoteTarget').textContent.trim();
+      navigator.clipboard.writeText(val);
+      showToast("คัดลอกโน้ตสลิปแล้วค่ะ ♡");
+    }
+
+    // คัดลอกเฉพาะตัวเลขบัญชี / เบอร์วอลเลต
+    function copyPlainNumber(elementId) {
+      const raw = document.getElementById(elementId).textContent;
+      const cleanNum = raw.replace(/[^0-9]/g, '');
+      navigator.clipboard.writeText(cleanNum);
+      showToast("คัดลอกเลขบัญชีแล้วค่ะ ♡");
+    }
+  </script>
+</body>
+</html>
