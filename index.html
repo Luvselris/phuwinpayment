@@ -19,11 +19,11 @@
       --card-blue-1: #A8D0EF;
       --card-blue-2: #C1E4F3;
       --cream-accent: #FFF9E6;
-      --deep-accent: #7faed6;
+      --deep-accent: #8eb7de;
       --text-dark: #2c4257;
       --text-sub: #54718a;
       --white: #ffffff;
-      --shadow: 0 8px 24px rgba(127, 174, 214, 0.25);
+      --shadow: 0 8px 24px rgba(142, 183, 222, 0.25);
     }
 
     *, *::before, *::after {
@@ -36,7 +36,7 @@
 
     body {
       min-height: 100vh;
-      background: linear-gradient(180deg, #dce6ed 0%, #E3F1FB 45%, #eef4f8 100%);
+      background-color: var(--bg-color);
       color: var(--text-dark);
       display: flex;
       justify-content: center;
@@ -89,7 +89,7 @@
       border-radius: 50%;
       object-fit: cover;
       border: 4px solid var(--white);
-      box-shadow: 0 6px 18px rgba(127, 174, 214, 0.35);
+      box-shadow: 0 6px 18px rgba(142, 183, 222, 0.35);
       background: var(--white);
       display: block;
     }
@@ -160,7 +160,7 @@
       font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 3px 10px rgba(127, 174, 214, 0.4);
+      box-shadow: 0 3px 10px rgba(142, 183, 222, 0.45);
       transition: all 0.2s ease;
       white-space: nowrap;
       flex-shrink: 0;
@@ -170,18 +170,38 @@
       transform: scale(0.94);
     }
 
-    /* 4. กล่องฟอร์มใหญ่ */
+    /* 4. กล่องฟอร์มใหญ่ จัดบรรทัดพอดีสวยงาม */
     .form-art-card {
       background: var(--cream-accent);
       border: 1.5px solid #f2e7c4;
       border-radius: 22px;
-      padding: 18px 16px;
-      line-height: 1.75;
+      padding: 20px 16px;
+      line-height: 1.7;
       font-size: 13px;
       color: var(--text-dark);
-      white-space: pre-wrap;
-      word-break: break-word;
       box-shadow: 0 4px 14px rgba(220, 205, 160, 0.25);
+      text-align: center;
+    }
+
+    .form-top-mark {
+      text-align: left;
+      font-size: 13.5px;
+      margin-bottom: 12px;
+    }
+
+    .form-block {
+      margin-bottom: 14px;
+    }
+
+    .form-line {
+      display: block;
+      margin: 2px 0;
+    }
+
+    .form-bottom-mark {
+      text-align: right;
+      font-size: 13.5px;
+      margin-top: 12px;
     }
 
     /* 5. กล่องคัดลอกโน้ตสลิป */
@@ -294,22 +314,27 @@
       <button type="button" class="btn-action" onclick="copyPlainNumber('walletNumText')">คัดลอก</button>
     </div>
 
-    <!-- 5. ช่องฟอร์มใหญ่ -->
-    <div class="form-art-card" id="formArtBox">💬𓈒♡⠀
-
-        ฝากคุณลูกค้ากำกับ𓈒  สลิป
-  ซื้อขายกับภูวินท์line@383dsyqf  ♡3♡𓈒🐈‍⬛
-
-       ธนาคาร 𓈒 คัดลอกไปใส่ตรง
-         𓈒💭╺     บันทึกช่วยจำ   !  
-
-       วอเล็ท 𓈒 คัดลอกไปใส่ตรง
-      ╺     ข้อความบอกผู้รับ   𓈒🗯️
-
-              ╺ กรณี “ลืม” โน๊ต 
-     ให้โอนมา1฿ แล้วโน๊ตสลิปมา
-
-                                         ♡𓈒📓𓈒⚫️</div>
+    <!-- 5. ช่องฟอร์มใหญ่ จัดบรรทัดพอดีสวยงาม -->
+    <div class="form-art-card" id="formArtBox">
+      <div class="form-top-mark">💬𓈒♡⠀</div>
+      <div class="form-block">
+        <span class="form-line">ฝากคุณลูกค้ากำกับ𓈒 สลิป</span>
+        <span class="form-line">ซื้อขายกับภูวินท์line@383dsyqf ♡3♡𓈒🐈‍⬛</span>
+      </div>
+      <div class="form-block">
+        <span class="form-line">ธนาคาร 𓈒 คัดลอกไปใส่ตรง</span>
+        <span class="form-line">𓈒💭╺ บันทึกช่วยจำ !</span>
+      </div>
+      <div class="form-block">
+        <span class="form-line">วอเล็ท 𓈒 คัดลอกไปใส่ตรง</span>
+        <span class="form-line">╺ ข้อความบอกผู้รับ 𓈒🗯️</span>
+      </div>
+      <div class="form-block" style="margin-bottom:6px;">
+        <span class="form-line">╺ กรณี “ลืม” โน๊ต</span>
+        <span class="form-line">ให้โอนมา1฿ แล้วโน๊ตสลิปมา</span>
+      </div>
+      <div class="form-bottom-mark">♡𓈒📓𓈒⚫️</div>
+    </div>
 
     <!-- 6. ช่องโน้ตสลิปให้กดคัดลอก (คัดลอกเฉพาะ ซื้อขายกับภูวินท์line@383dsyqf) -->
     <div class="copy-note-card">
@@ -363,6 +388,13 @@
       }, { passive: true });
     });
 
+    function renderFormArtHtml(text) {
+      if (!text) return '';
+      if (text.includes('<div') || text.includes('<span')) return text;
+      const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+      return lines.map(l => `<span class="form-line">${l}</span>`).join('');
+    }
+
     function applyData(d) {
       if (!d) return;
       if (d.banner) document.getElementById('bannerImg').src = d.banner;
@@ -374,7 +406,9 @@
       if (d.accOwner) document.getElementById('accOwnerText').textContent = d.accOwner;
       if (d.kplusNum) document.getElementById('kplusNumText').textContent = d.kplusNum;
       if (d.walletNum) document.getElementById('walletNumText').textContent = d.walletNum;
-      if (d.formArt) document.getElementById('formArtBox').textContent = d.formArt;
+      if (d.formArt) {
+        document.getElementById('formArtBox').innerHTML = renderFormArtHtml(d.formArt);
+      }
       if (d.copyNote) document.getElementById('copyNoteTarget').textContent = d.copyNote;
       if (d.postImg) document.getElementById('postImage').src = d.postImg;
       if (d.musicUrl && music.src !== d.musicUrl) {
@@ -403,14 +437,12 @@
       setTimeout(() => t.classList.remove('show'), 2000);
     }
 
-    // คัดลอกเฉพาะข้อความโน้ต: ซื้อขายกับภูวินท์line@383dsyqf
     function copyNoteOnly() {
       const val = document.getElementById('copyNoteTarget').textContent.trim();
       navigator.clipboard.writeText(val);
       showToast("คัดลอกโน้ตสลิปแล้วค่ะ ♡");
     }
 
-    // คัดลอกเฉพาะตัวเลขบัญชี / เบอร์วอลเลต
     function copyPlainNumber(elementId) {
       const raw = document.getElementById(elementId).textContent;
       const cleanNum = raw.replace(/[^0-9]/g, '');
